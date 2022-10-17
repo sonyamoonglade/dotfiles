@@ -1,6 +1,10 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 
+# Required for my system
+PRIMARY_NAMESERVER="8.8.8.8"
+sudo tee /etc/resolv.conf <<< "nameserver $PRIMARY_NAMESERVER"
+
 ZSH_THEME="robbyrussell"
 plugins=(git)
 
