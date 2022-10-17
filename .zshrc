@@ -1,9 +1,7 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 
-# Required for my system
-PRIMARY_NAMESERVER="8.8.8.8"
-sudo tee /etc/resolv.conf <<< "nameserver $PRIMARY_NAMESERVER"
+
 
 ZSH_THEME="robbyrussell"
 plugins=(git)
@@ -14,6 +12,10 @@ source $ZSH/oh-my-zsh.sh
 alias godev="cd ~/development/golang"
 alias webdev="cd ~/development/web"
 alias python="python3"
+
+# Required for my system
+PRIMARY_NAMESERVER="8.8.8.8"
+alias ns="sudo tee /etc/resolv.conf <<< 'nameserver $PRIMARY_NAMESERVER'"
 
 # TODO: implement cli
 cli_text=$(echo $(protonvpn-cli s) | grep "No active")
