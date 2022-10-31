@@ -14,12 +14,12 @@ set undofile
 set incsearch
 set scrolloff=8
 set signcolumn=yes
-set colorcolumn=80
+set colorcolumn=100
 set number
 set termguicolors
 set encoding=UTF-8
-set completeopt=menuone,noinsert,noselect
 set relativenumber
+
 set background=dark
 
 call plug#begin('~/.vim/plugged')
@@ -27,15 +27,17 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 
 Plug 'preservim/nerdtree'
-Plug 'kyazdani42/nvim-web-devicons'
 Plug 'romgrk/barbar.nvim'
 
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
+" Cosmetics
 Plug 'vim-airline/vim-airline'
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'vim-airline/vim-airline-themes'
-
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'morhetz/gruvbox'
 
 " JS/ts Stuff..
 Plug 'prettier/vim-prettier', {
@@ -46,9 +48,10 @@ Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+Plug 'mattn/emmet-vim'
  
-Plug 'norcalli/nvim-colorizer.lua'
 
+"Autocomplete, utils...
 Plug 'jiangmiao/auto-pairs'
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
@@ -57,24 +60,30 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'onsails/lspkind-nvim'
+Plug 'kosayoda/nvim-lightbulb'
 
 Plug 'tpope/vim-fugitive'
-Plug 'morhetz/gruvbox'
-
 Plug 'tpope/vim-commentary'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
-Plug 'mattn/emmet-vim'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'mfussenegger/nvim-jdtls'
-Plug 'kosayoda/nvim-lightbulb'
 Plug 'fedepujol/move.nvim'
+Plug 'mfussenegger/nvim-jdtls'
+
+"go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+"rust
+Plug 'simrat39/rust-tools.nvim'
 call plug#end()
 
-colorscheme gruvbox
 highlight Normal guifg=none
+
 let g:airline_theme='gruvbox'
+let g:gruvbox_contrast_dark = 'medium'
+colorscheme gruvbox
+
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
+
 :command WQ wq
 :command Wq wq
 :command W w
@@ -82,73 +91,12 @@ lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 
 let mapleader = " "
 
-" COMPLETION CONFIG
-set completeopt=menu,menuone,noselect
-
-lua <<EOF
-  -- Setup nvim-cmp.
-  local cmp = require'cmp'
-  local lspkind = require('lspkind')
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-   expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
-      end,
-    },
-    mapping = {
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    },
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      -- { name = 'vsnip' }, -- For vsnip users.
-    }, {
-      { name = 'buffer' },
-    }),
-
-    formatting = {
-    -- Youtube: How to set up nice formatting for your sources.
-    format = lspkind.cmp_format {
-      with_text = true,
-      menu = {
-        buffer = "[buf]",
-        nvim_lsp = "[LSP]",
-        path = "[path]",
-      },
-    },
-  },
-})
-
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-EOF
-
-
-
-" END COMPLETION CONFIG
+source ~/.config/nvim/plugins/nav.vim
+source ~/.config/nvim/plugins/nvimlsp.vim
 
 " Move lines config
 nnoremap <A-j> :MoveLine(1)<CR>
 nnoremap <A-k> :MoveLine(-1)<CR>
-
-source ~/.config/nvim/plugins/nav.vim
-source ~/.config/nvim/plugins/nvimlsp.vim
 
 " Telescope bindings
 nnoremap <leader>ff <cmd>Telescope find_files<cr> 
@@ -171,6 +119,8 @@ let g:go_highlight_extra_types = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
+nnoremap <leader>gfs :GoFillStruct<cr>
+
 
 " NERDTree
 nnoremap <A-f> :NERDTreeFocus<CR>

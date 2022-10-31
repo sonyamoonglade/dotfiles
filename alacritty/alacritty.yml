@@ -8,15 +8,15 @@ shell:
 
 window:
   dimensions:
-    columns: 180
+    columns: 150
     lines: 42
   padding:
     x: 12
     y: 8
 
   opacity: 0.9
-  decorations: none
-  startup_mode: Windowed
+  decorations: Full
+  startup_mode: Fullscreen
 scrolling:
   history: 10000
   multiplier: 3

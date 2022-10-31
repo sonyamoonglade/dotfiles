@@ -11,6 +11,7 @@ source $ZSH/oh-my-zsh.sh
 # Personal...
 alias godev="cd ~/development/golang"
 alias webdev="cd ~/development/web"
+alias dev="cd ~/development"
 alias python="python3"
 
 # Required for my system
@@ -40,4 +41,5 @@ export PATH=$PATH:$GOROOT
 #python
 export PATH=$PATH:/usr/bin/python3
 
-
+#rust
+export PATH=$PATH:/usr/local/rust
