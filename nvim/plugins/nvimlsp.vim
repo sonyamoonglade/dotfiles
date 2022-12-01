@@ -8,17 +8,35 @@ lua <<EOF
   -- Setup nvim-cmp.
   local cmp = require'cmp'
   local lspkind = require('lspkind')
+
+  local function select_next()
+      return function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          fallback()
+        end
+      end
+  end
+ 
+  local function select_prev()
+      return function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end
+  end
+
   cmp.setup({
     snippet = {
-      -- REQUIRED - you must specify a snippet engine
    expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
       end,
     },
     mapping = {
+      ['<Tab>'] = select_next(),
+      ["<S-Tab"] = select_prev(),
       ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
       ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
@@ -31,7 +49,6 @@ lua <<EOF
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      -- { name = 'vsnip' }, -- For vsnip users.
     },{
       { name = 'buffer' },
     }),  
@@ -64,40 +81,18 @@ EOF
 lua << EOF
 -- Showing defaults
 require'nvim-lightbulb'.setup {
-    -- LSP client names to ignore
-    -- Example: {"sumneko_lua", "null-ls"}
-    ignore = {},
     sign = {
         enabled = true,
-        -- Priority of the gutter sign
         priority = 10,
     },
     float = {
         enabled = false,
-        -- Text to show in the popup float
         text = "💡",
-        -- Available keys for window options:
-        -- - height     of floating window
-        -- - width      of floating window
-        -- - wrap_at    character to wrap at for computing height
-        -- - max_width  maximal width of floating window
-        -- - max_height maximal height of floating window
-        -- - pad_left   number of columns to pad contents at left
-        -- - pad_right  number of columns to pad contents at right
-        -- - pad_top    number of lines to pad contents at top
-        -- - pad_bottom number of lines to pad contents at bottom
-        -- - offset_x   x-axis offset of the floating window
-        -- - offset_y   y-axis offset of the floating window
-        -- - anchor     corner of float to place at the cursor (NW, NE, SW, SE)
-        -- - winblend   transparency of the window (0-100)
-        -- -winblend: 50,
         win_opts = {},
     },
     virtual_text = {
         enabled = false,
-        -- Text to show at virtual text
         text = "💡",
-        -- highlight mode to use for virtual text (replace, combine, blend), see :help nvim_buf_set_extmark() for reference
         hl_mode = "replace",
     },
     status_text = {
@@ -112,6 +107,7 @@ EOF
 
 lua << EOF
 local nvim_lsp = require('lspconfig')
+
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -137,57 +133,22 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap("n", "<leader>ca", "<Cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
-  -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-  end
-
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
-  end
 end
--- - autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
 
--- Use a loop to conveniently both setup defined servers 
--- and map buffer local keybindings when the language server attaches
 local servers = { "gopls", "tsserver", "rust_analyzer"}
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
+  nvim_lsp[lsp].setup { 
+      on_attach = on_attach,
+  }
 end
 
-nvim_lsp.rust_analyzer.setup({
-    on_attach=on_attach,
-    settings = {
-        ["rust-analyzer"] = {
-            imports = {
-                granularity = {
-                    group = "module",
-                },
-                prefix = "self",
-            },
-            cargo = {
-                buildScripts = {
-                    enable = true,
-                },
-            },
-            procMacro = {
-                enable = true
-            },
-        }
-    }
+
+require('lspconfig').tsserver.setup({
+    init_options = {
+        preferences = {
+            disableSuggestions = true,
+        },
+    },
 })
-
-
 EOF
 

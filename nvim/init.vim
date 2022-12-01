@@ -1,7 +1,7 @@
 set exrc
 set mouse=a
-set tabstop=3 softtabstop=3
-set shiftwidth=3
+set tabstop=4 softtabstop=4
+set shiftwidth=4
 set expandtab
 set smartindent
 set nohlsearch
@@ -45,11 +45,10 @@ Plug 'prettier/vim-prettier', {
    \ 'for': ['javascript', 'typescript', 'css', 'scss', 'json', 'yaml', 'html'] }
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
 Plug 'mattn/emmet-vim'
- 
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'yuezk/vim-js'
+Plug 'tree-sitter/tree-sitter-javascript'
 
 "Autocomplete, utils...
 Plug 'jiangmiao/auto-pairs'
@@ -74,12 +73,13 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 "rust
 Plug 'simrat39/rust-tools.nvim'
+
 call plug#end()
 
 highlight Normal guifg=none
 
 let g:airline_theme='gruvbox'
-let g:gruvbox_contrast_dark = 'medium'
+let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
@@ -95,8 +95,8 @@ source ~/.config/nvim/plugins/nav.vim
 source ~/.config/nvim/plugins/nvimlsp.vim
 
 " Move lines config
-nnoremap <A-j> :MoveLine(1)<CR>
-nnoremap <A-k> :MoveLine(-1)<CR>
+nnoremap <leader>j :MoveLine(1)<CR>
+nnoremap <leader>k :MoveLine(-1)<CR>
 
 " Telescope bindings
 nnoremap <leader>ff <cmd>Telescope find_files<cr> 
@@ -129,19 +129,18 @@ nnoremap <C-f> :NERDTreeFind<CR>
 " Open the existing NERDTree on each new tab.
 autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 
-nnoremap <leader>1 <cmd>BufferGoto 1<cr>
-nnoremap <leader>2 <cmd>BufferGoto 2<cr>
-nnoremap <leader>3 <cmd>BufferGoto 3<cr>
-nnoremap <leader>4 <cmd>BufferGoto 4<cr>
-nnoremap <leader>5 <cmd>BufferGoto 5<cr>
-nnoremap <leader>6 <cmd>BufferGoto 6<cr>
+" Buffers (tabs) navigation
+
+nnoremap <C-n> :BufferPrevious<CR>
+nnoremap <C-m> :BufferNext<CR>
+nnoremap <C-x> :BufferClose<CR>
 
 " Prettier
 let g:prettier#autoformat = 0
 let g:prettier#autoformat_require_pragma = 0
 let g:prettier#autoformat_config_files = ["/home/aalexandrovich/.prettierrc"]
+let g:prettier#config#tab_width = 4
 
-" let g:prettier#autoformat = 0
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
 " Auto import

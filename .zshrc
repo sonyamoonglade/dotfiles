@@ -13,18 +13,11 @@ alias godev="cd ~/development/golang"
 alias webdev="cd ~/development/web"
 alias dev="cd ~/development"
 alias python="python3"
+alias v="nvim"
 
 # Required for my system
 PRIMARY_NAMESERVER="8.8.8.8"
 alias ns="sudo tee /etc/resolv.conf <<< 'nameserver $PRIMARY_NAMESERVER'"
-
-# TODO: implement cli
-cli_text=$(echo $(protonvpn-cli s) | grep "No active")
-if [[ -z $cli_text ]]; then
-	alias vpn="protonvpn-cli d"
-else
-	alias vpn="protonvpn-cli c"
-fi
 
 #node
 export PATH=$PATH:/usr/local/lib/nodejs/node-16.17.1/bin
