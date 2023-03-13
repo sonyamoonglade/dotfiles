@@ -1,7 +1,4 @@
 
-autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
-
-
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
@@ -78,32 +75,6 @@ EOF
 
 
 
-lua << EOF
--- Showing defaults
-require'nvim-lightbulb'.setup {
-    sign = {
-        enabled = true,
-        priority = 10,
-    },
-    float = {
-        enabled = false,
-        text = "💡",
-        win_opts = {},
-    },
-    virtual_text = {
-        enabled = false,
-        text = "💡",
-        hl_mode = "replace",
-    },
-    status_text = {
-        enabled = false,
-        -- Text to provide when code actions are available
-        text = "💡",
-        -- Text to provide when no actions are available
-        text_unavailable = ""
-    }
-}
-EOF
 
 lua << EOF
 local nvim_lsp = require('lspconfig')
@@ -135,7 +106,7 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { "gopls", "tsserver", "rust_analyzer"}
+local servers = { "gopls", "tsserver"}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { 
       on_attach = on_attach,
@@ -143,12 +114,13 @@ for _, lsp in ipairs(servers) do
 end
 
 
-require('lspconfig').tsserver.setup({
-    init_options = {
-        preferences = {
-            disableSuggestions = true,
-        },
-    },
-})
 EOF
+
+" require('lspconfig').tsserver.setup({
+"     init_options = {
+"         preferences = {
+"             disableSuggestions = true,
+"         },
+"     },
+" })
 
