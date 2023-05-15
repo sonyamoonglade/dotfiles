@@ -1,9 +1,8 @@
 set exrc
 set mouse=a
-set tabstop=2 softtabstop=2
-set shiftwidth=2
+set tabstop=3 softtabstop=3
+set shiftwidth=3
 set expandtab
-set smartindent
 set nohlsearch
 set hidden
 set nowrap
@@ -12,7 +11,7 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
-set scrolloff=16
+set scrolloff=20
 set signcolumn=yes
 set colorcolumn=100
 set number
@@ -20,6 +19,7 @@ set termguicolors
 set encoding=UTF-8
 set relativenumber
 set background=dark
+let loaded_netrwPlugin = 1
 
 call plug#begin('~/.vim/plugged')
 Plug 'nvim-lua/popup.nvim'
@@ -35,6 +35,8 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'morhetz/gruvbox'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'bluz71/vim-nightfly-colors', { 'as': 'nightfly' }
 
 "Autocomplete, utils...
 Plug 'neovim/nvim-lspconfig'
@@ -50,6 +52,11 @@ Plug 'tpope/vim-commentary'
 Plug 'fedepujol/move.nvim'
 Plug 'mfussenegger/nvim-jdtls'
 Plug 'kevinoid/vim-jsonc'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install --frozen-lockfile --production',
+  \ 'branch': 'release/0.x'
+  \ }
+
 
 "go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -59,8 +66,11 @@ call plug#end()
 highlight Normal guifg=none
 
 let g:airline_theme='gruvbox'
-let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_contrast_dark = 'dark'
 colorscheme gruvbox
+
+" colorscheme catppuccin-mocha
+
 
 :command WQ wq
 :command Wq wq
@@ -80,11 +90,6 @@ nnoremap <leader>k :MoveLine(-1)<CR>
 nnoremap <leader>ff <cmd>Telescope find_files<cr> 
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 
-
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 3
-
 let g:completion_matching_strategy_list = ["exact","substring","fuzzy"]
 
 " vim-go
@@ -101,9 +106,16 @@ nnoremap <C-x> :BufferClose<CR>
 
 vmap <leader>yy :!xclip -f -sel clip<cr>
 
-" Tree
-nnoremap <M-f> :Explore<CR>
+
+autocmd BufWritePre *.js Neoformat
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+let g:prettier#exec_cmd_async = 1
+let g:prettier#autoformat_config_files = ["~/.prettierrc"]
 
 lua << EOF
 require("autoclose").setup({})
 EOF
+
+
+
