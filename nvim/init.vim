@@ -19,7 +19,6 @@ set termguicolors
 set encoding=UTF-8
 set relativenumber
 set background=dark
-let loaded_netrwPlugin = 1
 
 call plug#begin('~/.vim/plugged')
 Plug 'nvim-lua/popup.nvim'
@@ -107,12 +106,12 @@ nnoremap <C-x> :BufferClose<CR>
 vmap <leader>yy :!xclip -f -sel clip<cr>
 
 
-autocmd BufWritePre *.js Neoformat
+autocmd BufWritePre *.js PrettierAsync
 let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
 let g:prettier#exec_cmd_async = 1
 let g:prettier#autoformat_config_files = ["~/.prettierrc"]
-
+let g:prettie#exec_cmd_path="/home/aalexandrovich/.nvm/versions/node/v20.5.0/bin/prettier"
 lua << EOF
 require("autoclose").setup({})
 EOF
