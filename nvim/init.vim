@@ -12,10 +12,8 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set scrolloff=20
-set signcolumn=yes
-set colorcolumn=100
 set number
-set termguicolors
+" set termguicolors
 set encoding=UTF-8
 set relativenumber
 set background=dark
@@ -29,6 +27,7 @@ Plug 'romgrk/barbar.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 " Cosmetics
+Plug 'tribela/vim-transparent'
 Plug 'vim-airline/vim-airline'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'vim-airline/vim-airline-themes'
@@ -78,7 +77,7 @@ colorscheme gruvbox
 
 let mapleader = " "
 
-source ~/.config/nvim/plugins/nav.vim
+source ~/.config/nvim/plugins/telescope.vim
 source ~/.config/nvim/plugins/nvimlsp.vim
 
 " Move lines config
@@ -105,13 +104,14 @@ nnoremap <C-x> :BufferClose<CR>
 
 vmap <leader>yy :!xclip -f -sel clip<cr>
 
-
-autocmd BufWritePre *.js PrettierAsync
-let g:prettier#autoformat = 1
+" autocmd BufWritePre *.js PrettierAsync
+" let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
 let g:prettier#exec_cmd_async = 1
 let g:prettier#autoformat_config_files = ["~/.prettierrc"]
 let g:prettie#exec_cmd_path="/home/aalexandrovich/.nvm/versions/node/v20.5.0/bin/prettier"
+nnoremap <leader>p :PrettierAsync<cr>
+
 lua << EOF
 require("autoclose").setup({})
 EOF

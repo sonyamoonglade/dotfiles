@@ -23,6 +23,7 @@ export GOROOT=/usr/local/go
 export GOBIN=$HOME/go/bin
 export PATH=$PATH:$GOBIN
 export PATH=$PATH:$GOROOT
+export PATH=$PATH:$GOROOT/bin
 
 #python
 export PATH=$PATH:/usr/bin/python3

@@ -106,13 +106,20 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { "gopls", "tsserver"}
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { 
-      on_attach = on_attach,
-  }
-end
 
+nvim_lsp["tsserver"].setup({
+   on_attach = on_attach,
+})
+
+vim.diagnostic.config({
+   signs = false,
+})
+
+nvim_lsp["gopls"].setup({
+   on_attach = on_attach,
+})
 
 EOF
 
+
+"virtual_text = false,
