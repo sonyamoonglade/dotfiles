@@ -12,9 +12,17 @@ source $ZSH/oh-my-zsh.sh
 alias python="python3"
 alias v="nvim"
 alias e="nvim ."
+alias gt="go test -count=1 -v -run"
 alias gs="git status"
 alias gp="git push"
-alias dvm='colima start --arch x86_64 --disk 60 --cpu 2'
+alias gl="git log"
+alias gd="git diff"
+alias dvm='colima start --vm-type=vz \
+   --vz-rosetta \
+   --arch x86_64 \
+   --disk 60 \
+   --cpu 8 \
+   --memory 4'
 alias dvm-stop='colima stop'
 alias m="make"
 
@@ -37,3 +45,5 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=$PATH:~/.o3-cli/bin
 
 alias ozon="source ~/.o3.env.sh"
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8

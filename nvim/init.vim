@@ -27,6 +27,7 @@ Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-telescope/telescope-live-grep-args.nvim'
 
 Plug 'nvim-telescope/telescope.nvim'
 
@@ -82,7 +83,7 @@ nnoremap <leader>j :MoveLine(1)<CR>
 nnoremap <leader>k :MoveLine(-1)<CR>
 
 " codeium 
-nnoremap <leader>cc :CodeiumEnable<cr>
+nnoremap <leader>we :CodeiumEnable<cr>
 nnoremap <leader>cd :CodeiumDisable<cr>
 
 " vim-go
@@ -105,7 +106,7 @@ set clipboard+=unnamedplus
 
 let g:context_filetype_blacklist = [".jsx", ".tsx"]
 
-let g:prettier#exec_cmd_path="/home/aalexandrovich/.nvm/versions/node/v21.7.0/bin/prettier"
+let g:prettier#exec_cmd_path="/usr/local/bin/prettier"
 let g:prettier#autoformat_require_pragma = 0
 let g:prettier#exec_cmd_async = 1
 let g:prettier#autoformat_config_files = ["~/.prettierrc"]
@@ -131,7 +132,11 @@ source ~/.config/nvim/plugins/nvimlsp.vim
 
 lua << EOF
 require("autoclose").setup({})
-require("harpoon").setup({})
+require("harpoon").setup({
+   menu = {
+      width = 100
+   }
+})
 require("move").setup({})
 require("nvim-tree").setup({
   sort = {

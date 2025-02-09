@@ -5,13 +5,18 @@
     "Blue Component" : 1,
     "Red Component" : 1
   },
-  "Non-ASCII Anti Aliased" : true,
+  "Ansi 12 Color (Light)" : {
+    "Green Component" : 0.84705882352941175,
+    "Blue Component" : 1,
+    "Red Component" : 0.45098039215686275
+  },
   "Cursor Text Color" : {
     "Red Component" : 0.078431372549019607,
     "Color Space" : "sRGB",
     "Blue Component" : 0.11764705882352941,
     "Green Component" : 0.10588235294117647
   },
+  "Custom Window Title" : "Working station",
   "Prompt Before Closing 2" : false,
   "Ansi 3 Color (Dark)" : {
     "Green Component" : 0.59215686274509804,
@@ -23,6 +28,7 @@
     "Blue Component" : 1,
     "Red Component" : 0.45098039215686275
   },
+  "Initial Use Transparency" : true,
   "Mouse Reporting" : true,
   "Use Underline Color (Light)" : false,
   "Disable Window Resizing" : true,
@@ -38,7 +44,7 @@
     "Blue Component" : 0,
     "Red Component" : 1
   },
-  "Initial Text" : "",
+  "Initial Text" : "tmux",
   "Selection Color (Dark)" : {
     "Green Component" : 0.93333333333333335,
     "Blue Component" : 0.89411764705882357,
@@ -122,7 +128,7 @@
   "Vertical Spacing" : 1,
   "Use Tab Color (Light)" : false,
   "Cursor Type" : 1,
-  "Columns" : 80,
+  "Columns" : 185,
   "Ansi 2 Color (Light)" : {
     "Green Component" : 0.70196078431372544,
     "Blue Component" : 0,
@@ -236,7 +242,7 @@
   },
   "Faint Text Alpha (Dark)" : 0.5,
   "Blur Radius" : 0.10000000000000001,
-  "Rows" : 25,
+  "Rows" : 43,
   "Background Color (Light)" : {
     "Green Component" : 0.98039215686274506,
     "Blue Component" : 0.98039215686274506,
@@ -249,6 +255,7 @@
     "Alpha Component" : 0.25,
     "Green Component" : 0.92047786712646484
   },
+  "Use Custom Window Title" : true,
   "Ansi 6 Color (Dark)" : {
     "Green Component" : 0.74901960784313726,
     "Blue Component" : 0.59999999999999998,
@@ -283,7 +290,7 @@
     "Blue Component" : 0.19607843137254902,
     "Red Component" : 0.72156862745098038
   },
-  "Normal Font" : "JetBrainsMonoNFM-Regular 20",
+  "Normal Font" : "JetBrainsMonoNFM-Regular 14",
   "Use Selected Text Color (Dark)" : true,
   "Foreground Color" : {
     "Red Component" : 0.85490196078431369,
@@ -523,17 +530,13 @@
     "Blue Component" : 0.85490196078431369,
     "Green Component" : 0.85490196078431369
   },
-  "Ansi 12 Color (Light)" : {
-    "Green Component" : 0.84705882352941175,
-    "Blue Component" : 1,
-    "Red Component" : 0.45098039215686275
-  },
   "Ansi 0 Color" : {
     "Red Component" : 0.13725490196078433,
     "Color Space" : "sRGB",
     "Blue Component" : 0.17647058823529413,
     "Green Component" : 0.16470588235294117
   },
+  "Non-ASCII Anti Aliased" : true,
   "Foreground Color (Dark)" : {
     "Green Component" : 0.40392156862745099,
     "Blue Component" : 0.45098039215686275,
