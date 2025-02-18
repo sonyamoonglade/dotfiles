@@ -13,6 +13,12 @@ alias python="python3"
 alias v="nvim"
 alias e="nvim ."
 alias gt="go test -count=1 -v -run"
+gtc ()
+{
+   go test -coverprofile cover.out ./... -run "$1" && \ 
+      go tool cover -html cover.out && \
+      rm cover.out
+}
 alias gs="git status"
 alias gp="git push"
 alias gl="git log"

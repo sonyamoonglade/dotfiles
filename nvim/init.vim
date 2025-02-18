@@ -131,6 +131,11 @@ source ~/.config/nvim/plugins/telescope.vim
 source ~/.config/nvim/plugins/nvimlsp.vim
 
 lua << EOF
+vim.fn.matchadd("DiagnosticInfo", "\\(TODO:\\)")
+vim.fn.matchadd("DiagnosticInfo", "\\(%%\\)")
+vim.fn.matchadd("DiagnosticWarn", "\\(HACK:\\)")
+vim.fn.matchadd("DiagnosticWarn", "\\(WARN:\\)")
+
 require("autoclose").setup({})
 require("harpoon").setup({
    menu = {
